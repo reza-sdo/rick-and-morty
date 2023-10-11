@@ -9,15 +9,11 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     fetch("https://rickandmortyapi.com/api/character")
-      .then((res) => {
-        setIsLoading(true);
-        return res.json();
-      })
-      .then((data) => {
-        setCharacters(data.results.slice(0, 5));
-        setIsLoading(false);
-      });
+      .then((res) => res.json())
+      .then((data) => setCharacters(data.results.slice(0, 5)));
+    setIsLoading(false);
   }, []);
   // useEffect(()=>{
 
