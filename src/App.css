@@ -189,6 +189,11 @@
   background-color: var(--slate-800);
   border-radius: 1rem;
   padding: 1rem;
+  height: 333px;
+  overflow-y: scroll;
+}
+.character-episodes::-webkit-scrollbar {
+  display: none;
 }
 
 .character-episodes .title {
@@ -215,7 +220,7 @@
   align-items: center;
   justify-content: space-between;
   color: var(--slate-200);
-  padding: 0.5rem 0;
+  padding: 0.56rem 0;
   /* cursor: pointer; */
 }
 
