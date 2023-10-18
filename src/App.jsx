@@ -58,7 +58,7 @@ function App() {
           `https://rickandmortyapi.com/api/character?name=${query}`
         );
 
-        setCharacters(data.results.slice(0, 5));
+        setCharacters(data.results);
       } catch (error) {
         setCharacters([]);
         toast.error(error.message);

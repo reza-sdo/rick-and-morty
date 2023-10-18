@@ -56,6 +56,11 @@
 
 .characters-list {
   width: 40%;
+  height: 600px;
+  overflow-y: scroll;
+}
+.characters-list::-webkit-scrollbar {
+  display: none;
 }
 
 .box h2 {

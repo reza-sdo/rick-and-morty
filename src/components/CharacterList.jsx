@@ -11,7 +11,7 @@ function CharacterList({ selectedId,characters, isLoading,onSelectCharacter }) {
       </div>
     );
   return (
-    <div className="characters-list">
+    <div className="characters-list" >
       {characters.map((ch) => (
         <Character selectedId={selectedId} key={ch.id} item={ch} onSelectCharacter={onSelectCharacter} />
       ))}
@@ -23,7 +23,7 @@ export default CharacterList;
 
 function Character({selectedId, item,onSelectCharacter }) {
   return (
-    <div className="list__item">
+    <div className="list__item" >
       <img src={item.image} alt={item.name} />
 
       <CharacterName item={item} />
