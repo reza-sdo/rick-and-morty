@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
 import { character } from "./../../data/data";
-function CharacterDetails({ selectedId, onAddFave, isFavIN }) {
+function CharacterDetails({ selectedId, onAddFave, isFavIN, onRemove }) {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpi] = useState([]);
@@ -47,6 +47,7 @@ function CharacterDetails({ selectedId, onAddFave, isFavIN }) {
   return (
     <div style={{ flex: 1 }}>
       <CharacterSubInfo
+        onRemove={onRemove}
         character={character}
         isFavIN={isFavIN}
         onAddFave={onAddFave}
@@ -58,7 +59,7 @@ function CharacterDetails({ selectedId, onAddFave, isFavIN }) {
 
 export default CharacterDetails;
 
-function CharacterSubInfo({ character, isFavIN, onAddFave }) {
+function CharacterSubInfo({ character, isFavIN, onAddFave, onRemove }) {
   return (
     <div className="character-detail">
       <img
@@ -84,9 +85,9 @@ function CharacterSubInfo({ character, isFavIN, onAddFave }) {
         </div>
         {isFavIN ? (
           <button
-            disabled
             className="btn btn--primary"
             style={{ backgroundColor: `var(--green-600)` }}
+            onClick={() => onRemove(character.id)}
           >
             Already added ✔
           </button>
@@ -98,15 +99,6 @@ function CharacterSubInfo({ character, isFavIN, onAddFave }) {
             Add to Favorite
           </button>
         )}
-        {/* {
-            <button
-            onClick={() => onAddFave(character)}
-            className="btn btn--primary"
-            style={{isFavIN ? {backgroundColor:"var(--green-600)"}}}
-          >
-            Add to Favorite
-          </button>
-          } */}
       </div>
     </div>
   );
@@ -130,8 +122,11 @@ function EpiList({ episodes }) {
     <div className="character-episodes">
       <div className="title">
         <h2>list of episodes</h2>
-        <button onClick={() => setSort((is) => !is) }>
-          <ArrowUpCircleIcon className="icon" style={{rotate: sort?"0deg":"180deg"}}/>
+        <button onClick={() => setSort((is) => !is)}>
+          <ArrowUpCircleIcon
+            className="icon"
+            style={{ rotate: sort ? "0deg" : "180deg" }}
+          />
         </button>
       </div>
       <ul>

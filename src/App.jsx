@@ -28,9 +28,7 @@ function App() {
 
         setCharacters(data.results);
       } catch (err) {
-       
         if (!axios.isCancel()) {
-          
           setCharacters([]);
           toast.error(err.response.data.error);
         }
@@ -41,11 +39,6 @@ function App() {
     // if(query.length < 3){
     //   return
     // }
-
-
- 
-
-
 
     fetchData();
 
@@ -62,6 +55,9 @@ function App() {
   };
   const isFavIN = fave.map((i) => i.id).includes(selectedId);
 
+  const removeHandler = (id) => {
+    setFave((pre) => pre.filter((i) => i.id !== id));
+  };
   // useEffect(() => {
   //   const aa = setInterval(() => setTime((pre) => pre + 1), 1000);
   //   return () => clearInterval(aa);
@@ -74,7 +70,7 @@ function App() {
       <NavBar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={characters.length} />
-        <Favorites fave={fave} />
+        <Favorites fave={fave} onRemove={removeHandler} />
       </NavBar>
       <Main>
         <CharacterList
@@ -87,6 +83,7 @@ function App() {
           isFavIN={isFavIN}
           onAddFave={handleFave}
           selectedId={selectedId}
+          onRemove={removeHandler}
         />
       </Main>
     </div>
