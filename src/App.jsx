@@ -10,9 +10,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [fave, setFave] = useState([]);
+  const [fave, setFave] = useState(()=>JSON.parse(localStorage.getItem("fave")) || []);
   // const [time, setTime] = useState(0);
-
+useEffect(()=>{
+  localStorage.setItem( "fave", JSON.stringify(fave))
+},[fave])
   //NOTE Axios Async
   useEffect(() => {
     const controller = new AbortController();
