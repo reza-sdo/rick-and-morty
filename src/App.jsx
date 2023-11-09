@@ -3,51 +3,24 @@ import NavBar, { SearchResult, Search, Favorites } from "./components/NavBar";
 import CharacterList from "./components/CharacterList";
 import CharacterDetails from "./components/CharacterDetails";
 import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import  { Toaster } from "react-hot-toast";
+
+import useCharacters from "./hooks/useCharacters";
 function App() {
-  const [characters, setCharacters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
+  const { characters, isLoading } = useCharacters(
+    query,
+    "https://rickandmortyapi.com/api/character?name="
+  );
   const [selectedId, setSelectedId] = useState(null);
-  const [fave, setFave] = useState(()=>JSON.parse(localStorage.getItem("fave")) || []);
+  const [fave, setFave] = useState(
+    () => JSON.parse(localStorage.getItem("fave")) || []
+  );
   // const [time, setTime] = useState(0);
-useEffect(()=>{
-  localStorage.setItem( "fave", JSON.stringify(fave))
-},[fave])
-  //NOTE Axios Async
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character?name=${query}`,
-          { signal }
-        );
-
-        setCharacters(data.results);
-      } catch (err) {
-        if (!axios.isCancel()) {
-          setCharacters([]);
-          toast.error(err.response.data.error);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    // if(query.length < 3){
-    //   return
-    // }
-
-    fetchData();
-
-    return () => {
-      controller.abort();
-    };
-  }, [query]);
+    localStorage.setItem("fave", JSON.stringify(fave));
+  }, [fave]);
+  //NOTE Axios Async
 
   const handleSelectCharacter = (id) => {
     setSelectedId((perv) => (perv === id ? null : id));
