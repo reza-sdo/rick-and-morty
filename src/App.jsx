@@ -3,9 +3,9 @@ import NavBar, { SearchResult, Search, Favorites } from "./components/NavBar";
 import CharacterList from "./components/CharacterList";
 import CharacterDetails from "./components/CharacterDetails";
 import { useEffect, useState } from "react";
-import  { Toaster } from "react-hot-toast";
-
+import { Toaster } from "react-hot-toast";
 import useCharacters from "./hooks/useCharacters";
+import useLocalStorage from "./hooks/useLocalStorage";
 function App() {
   const [query, setQuery] = useState("");
   const { characters, isLoading } = useCharacters(
@@ -13,13 +13,7 @@ function App() {
     "https://rickandmortyapi.com/api/character?name="
   );
   const [selectedId, setSelectedId] = useState(null);
-  const [fave, setFave] = useState(
-    () => JSON.parse(localStorage.getItem("fave")) || []
-  );
-  // const [time, setTime] = useState(0);
-  useEffect(() => {
-    localStorage.setItem("fave", JSON.stringify(fave));
-  }, [fave]);
+  const [fave, setFave] = useLocalStorage("fave" , []);
   //NOTE Axios Async
 
   const handleSelectCharacter = (id) => {
